@@ -4,6 +4,7 @@ import { Wallet } from '../../../modules/wallets/entities/wallet.entity';
 import { PrismaTransaction } from '../unit-of-work';
 
 export interface IWalletsRepository {
+  deposit(data: { userId: string; amount: number }): Promise<void>;
   findByUserId(userId: string): Promise<Wallet | null>;
   updateBalanceByUserId(
     userId: string,
@@ -16,6 +17,23 @@ export interface IWalletsRepository {
 @Injectable()
 export class WalletsRepository implements IWalletsRepository {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async deposit({
+    userId,
+    amount,
+  }: {
+    userId: string;
+    amount: number;
+  }): Promise<void> {
+    await this.prismaService.wallet.update({
+      where: { userId },
+      data: {
+        balance: {
+          increment: amount,
+        },
+      },
+    });
+  }
 
   async findByUserId(userId: string) {
     const wallet = await this.prismaService.wallet.findUnique({
