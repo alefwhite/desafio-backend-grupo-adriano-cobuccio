@@ -1,0 +1,5 @@
+Comando para criação de módulos no NestJS
+1 - nest g mo nome-do-modulo
+
+Comando para criar um resource
+2 - nest g resource nome-do-recurso - Rest API
