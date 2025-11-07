@@ -7,7 +7,7 @@ import {
 import { env } from '../../shared/config/env';
 import { JwtService } from '@nestjs/jwt';
 import { Reflector } from '@nestjs/core';
-import { IS_PUBLIC_KEY } from '../../shared/decorators/isPublicRoute';
+import { IS_PUBLIC_KEY } from '../../shared/decorators/is-public-route.decorator';
 import { Request } from 'express';
 import { JwtPayload } from '../../shared/interfaces/jwt-payload.interface';
 
