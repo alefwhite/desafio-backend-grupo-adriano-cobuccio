@@ -22,7 +22,7 @@ export class AuthService {
 
     if (!user) throw new UnauthorizedException('Invalid credentials');
 
-    const isPasswordMatched = await compare(password, password);
+    const isPasswordMatched = await compare(password, user.getPassword());
 
     if (!isPasswordMatched)
       throw new UnauthorizedException('Invalid credentials');
