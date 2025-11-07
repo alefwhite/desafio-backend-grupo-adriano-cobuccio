@@ -1,4 +1,4 @@
-export class TransactionEntity {
+export class Transaction {
   readonly id: string;
   public senderWalletId: string;
   public receiverWalletId: string;
@@ -22,7 +22,7 @@ export class TransactionEntity {
   static create(
     data: Omit<TransactionData, 'id' | 'createdAt' | 'completedAt' | 'status'>,
   ) {
-    return new TransactionEntity({
+    return new Transaction({
       id: crypto.randomUUID(),
       senderWalletId: data.senderWalletId,
       receiverWalletId: data.receiverWalletId,

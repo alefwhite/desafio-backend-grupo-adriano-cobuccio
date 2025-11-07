@@ -1,56 +1,60 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { TransactionEntity } from '../../../modules/transactions/entities/transaction.entity';
+import { Transaction } from '../../../modules/transactions/entities/transaction.entity';
+import { PrismaTransaction } from '../unit-of-work';
 
-@Injectable()
-export class TransactionsRepository {
-  constructor(private readonly prismaService: PrismaService) {}
-
-  async createTransaction(
+export interface ITransactionRepository {
+  create(
     senderWalletId: string,
     receiverWalletId: string,
     amount: number,
     description?: string,
+    tx?: PrismaTransaction,
+  ): Promise<{ id: string }>;
+
+  findById(id: string): Promise<Transaction | null>;
+}
+
+@Injectable()
+export class TransactionsRepository implements ITransactionRepository {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async create(
+    senderWalletId: string,
+    receiverWalletId: string,
+    amount: number,
+    description?: string,
+    tx?: PrismaTransaction,
   ) {
-    return this.prismaService.$transaction(async (tx) => {
-      const created = await tx.transaction.create({
-        data: {
-          senderWalletId,
-          receiverWalletId,
-          amount,
-          description,
-        },
-      });
+    const prisma = tx ?? this.prismaService;
 
-      await tx.wallet.update({
-        where: { id: senderWalletId },
-        data: { balance: { decrement: amount } },
-      });
-
-      await tx.wallet.update({
-        where: { id: receiverWalletId },
-        data: { balance: { increment: amount } },
-      });
-
-      return { id: created.id };
+    const created = await prisma.transaction.create({
+      data: {
+        senderWalletId,
+        receiverWalletId,
+        amount,
+        description,
+      },
     });
+
+    return { id: created.id };
   }
 
   async findById(id: string) {
-    const t = await this.prismaService.transaction.findUnique({
+    const transaction = await this.prismaService.transaction.findUnique({
       where: { id },
     });
 
-    return t
-      ? new TransactionEntity({
-          id: t.id,
-          senderWalletId: t.senderWalletId,
-          receiverWalletId: t.receiverWalletId,
-          amount: Number(t.amount),
-          status: t.status,
-          description: t.description ?? undefined,
-          createdAt: t.createdAt,
-          completedAt: t.completedAt ?? undefined,
+    return transaction
+      ? new Transaction({
+          id: transaction.id,
+          senderWalletId: transaction.senderWalletId,
+          receiverWalletId: transaction.receiverWalletId,
+          amount: Number(transaction.amount),
+          status: transaction.status,
+          description: transaction.description ?? undefined,
+          createdAt: transaction.createdAt,
+          completedAt: transaction.completedAt ?? undefined,
         })
       : null;
   }

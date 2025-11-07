@@ -16,6 +16,10 @@ export class UnitOfWork implements IUnitOfWork {
   constructor(private readonly prismaService: PrismaService) {}
 
   transaction<T>(work: (tx: PrismaTransaction) => Promise<T>): Promise<T> {
-    return this.prismaService.$transaction(work);
+    return this.prismaService.$transaction(work, {
+      maxWait: 10000, // tempo máximo de espera para adquirir a transação (10s)
+      timeout: 60000, // timeout da transação aumentado para 60s
+      isolationLevel: 'ReadCommitted', // nível de isolamento
+    });
   }
 }
