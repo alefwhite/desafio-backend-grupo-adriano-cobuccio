@@ -24,6 +24,6 @@ export class UsersService {
       password: hashedPassword,
     });
 
-    return this.usersRepository.create(user);
+    return this.usersRepository.createWithWallet(user);
   }
 }

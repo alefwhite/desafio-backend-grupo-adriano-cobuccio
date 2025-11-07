@@ -2,11 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { User } from '../../../modules/users/entities/user.entity';
 import { PrismaService } from '../prisma.service';
 
+export interface IUsersRepository {
+  createWithWallet(user: User): Promise<{ id: string }>;
+  findByEmail(email: string): Promise<User | null>;
+}
+
 @Injectable()
-export class UsersRepository {
+export class UsersRepository implements IUsersRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(user: User) {
+  async createWithWallet(user: User) {
     const createdUser = await this.prismaService.user.create({
       data: {
         id: user.id,
@@ -15,6 +20,13 @@ export class UsersRepository {
         password: user.getPassword(),
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
+        wallet: {
+          create: {
+            balance: 0,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+        },
       },
     });
 
