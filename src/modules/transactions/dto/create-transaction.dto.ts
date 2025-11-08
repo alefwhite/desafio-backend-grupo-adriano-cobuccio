@@ -12,5 +12,10 @@ export class CreateTransactionDto {
   amount: number;
 
   @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  idempotencyKey: string;
+
+  @IsString()
   description?: string;
 }

@@ -4,6 +4,7 @@ export class Transaction {
   public receiverWalletId: string;
   public amount: number;
   public status: string;
+  public idempotencyKey: string;
   public description?: string;
   public createdAt: Date;
   public completedAt?: Date;
@@ -14,6 +15,7 @@ export class Transaction {
     this.receiverWalletId = data.receiverWalletId;
     this.amount = data.amount;
     this.status = data.status;
+    this.idempotencyKey = data.idempotencyKey;
     this.description = data.description;
     this.createdAt = data.createdAt;
     this.completedAt = data.completedAt;
@@ -27,6 +29,7 @@ export class Transaction {
       senderWalletId: data.senderWalletId,
       receiverWalletId: data.receiverWalletId,
       amount: data.amount,
+      idempotencyKey: data.idempotencyKey,
       status: 'PENDING',
       description: data.description,
       createdAt: new Date(),
@@ -41,13 +44,8 @@ type TransactionData = {
   receiverWalletId: string;
   amount: number;
   status: string;
+  idempotencyKey: string;
   description?: string;
   createdAt: Date;
   completedAt?: Date;
 };
-export class CreateTransactionDto {
-  senderWalletId: string;
-  receiverWalletId: string;
-  amount: number;
-  description?: string;
-}

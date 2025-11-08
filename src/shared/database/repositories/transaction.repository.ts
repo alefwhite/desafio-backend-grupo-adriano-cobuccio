@@ -8,11 +8,17 @@ export interface ITransactionRepository {
     senderWalletId: string,
     receiverWalletId: string,
     amount: number,
+    idempotencyKey: string,
     description?: string,
     tx?: PrismaTransaction,
   ): Promise<{ id: string }>;
-
   findById(id: string): Promise<Transaction | null>;
+  findByIdempotencyKey(idempotencyKey: string): Promise<{ id: string } | null>;
+  revertTransaction(
+    id: string,
+    idempotencyKey: string,
+    tx: PrismaTransaction,
+  ): Promise<void>;
 }
 
 @Injectable()
@@ -23,6 +29,7 @@ export class TransactionsRepository implements ITransactionRepository {
     senderWalletId: string,
     receiverWalletId: string,
     amount: number,
+    idempotencyKey: string,
     description?: string,
     tx?: PrismaTransaction,
   ) {
@@ -33,7 +40,9 @@ export class TransactionsRepository implements ITransactionRepository {
         senderWalletId,
         receiverWalletId,
         amount,
+        idempotencyKey,
         description,
+        status: 'COMPLETED',
       },
     });
 
@@ -52,10 +61,45 @@ export class TransactionsRepository implements ITransactionRepository {
           receiverWalletId: transaction.receiverWalletId,
           amount: Number(transaction.amount),
           status: transaction.status,
+          idempotencyKey: transaction.idempotencyKey,
           description: transaction.description ?? undefined,
           createdAt: transaction.createdAt,
           completedAt: transaction.completedAt ?? undefined,
         })
       : null;
+  }
+
+  async findByIdempotencyKey(idempotencyKey: string) {
+    const transaction = await this.prismaService.transaction.findUnique({
+      where: { idempotencyKey },
+    });
+
+    return transaction
+      ? new Transaction({
+          id: transaction.id,
+          senderWalletId: transaction.senderWalletId,
+          receiverWalletId: transaction.receiverWalletId,
+          amount: Number(transaction.amount),
+          idempotencyKey: transaction.idempotencyKey,
+          status: transaction.status,
+          description: transaction.description ?? undefined,
+          createdAt: transaction.createdAt,
+          completedAt: transaction.completedAt ?? undefined,
+        })
+      : null;
+  }
+
+  async revertTransaction(
+    id: string,
+    idempotencyKey: string,
+    tx: PrismaTransaction,
+  ) {
+    await tx.transaction.update({
+      where: { id },
+      data: {
+        status: 'REVERSED',
+        idempotencyKey,
+      },
+    });
   }
 }
