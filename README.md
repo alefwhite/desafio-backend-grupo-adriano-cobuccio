@@ -1,98 +1,539 @@
+# 💰 Wallet API - Sistema de Carteira Digital
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+<p align="center">
+  API RESTful para gerenciamento de carteiras digitais e transações financeiras construída com NestJS, Prisma, PostgreSQL e Docker.
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#tecnologias">Tecnologias</a> •
+  <a href="#pré-requisitos">Pré-requisitos</a> •
+  <a href="#instalação">Instalação</a> •
+  <a href="#configuração">Configuração</a> •
+  <a href="#execução">Execução</a> •
+  <a href="#testes">Testes</a> •
+  <a href="#documentação-api">Documentação</a> •
+  <a href="#docker">Docker</a>
+</p>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 📋 Features
+
+### ✅ Funcionalidades Implementadas
+
+- 🔐 **Autenticação JWT** - Sistema completo de autenticação com tokens
+- 👤 **Gerenciamento de Usuários** - Criação e gerenciamento de contas
+- 💳 **Carteiras Digitais** - Carteira automática para cada usuário
+- 💸 **Transações** - Transferências entre carteiras com validações
+- 🔄 **Estornos** - Sistema de reversão de transações
+- 🔒 **Idempotência** - Prevenção de transações duplicadas
+- 📊 **Métricas Prometheus** - Monitoramento da aplicação
+- 📈 **Grafana Dashboard** - Visualização de métricas
+- 📚 **Documentação Swagger** - API totalmente documentada
+- ✅ **Testes Unitários** - 42 testes (100% passando)
+- 🐳 **Docker** - Containerização completa
+
+### 🔐 Segurança
+
+- ✅ Hashing de senhas com bcrypt
+- ✅ Autenticação JWT
+- ✅ Guards de autorização
+- ✅ Validação de dados com class-validator
+- ✅ Helmet para segurança de headers HTTP
+- ✅ CORS configurado
+- ✅ Rate limiting com throttler
+
+---
+
+## 🚀 Tecnologias
+
+### Core
+
+- **[NestJS](https://nestjs.com/)** - Framework Node.js progressivo
+- **[TypeScript](https://www.typescriptlang.org/)** - JavaScript com tipagem estática
+- **[Prisma](https://www.prisma.io/)** - ORM moderno para Node.js
+- **[PostgreSQL](https://www.postgresql.org/)** - Banco de dados relacional
+
+### Bibliotecas Principais
+
+- **[@nestjs/jwt](https://www.npmjs.com/package/@nestjs/jwt)** - Autenticação JWT
+- **[@nestjs/swagger](https://www.npmjs.com/package/@nestjs/swagger)** - Documentação OpenAPI
+- **[bcryptjs](https://www.npmjs.com/package/bcryptjs)** - Hash de senhas
+- **[class-validator](https://www.npmjs.com/package/class-validator)** - Validação de DTOs
+- **[helmet](https://www.npmjs.com/package/helmet)** - Segurança HTTP
+
+### Monitoramento
+
+- **[Prometheus](https://prometheus.io/)** - Sistema de métricas
+- **[Grafana](https://grafana.com/)** - Visualização de dados
+
+### DevOps
+
+- **[Docker](https://www.docker.com/)** - Containerização
+- **[Docker Compose](https://docs.docker.com/compose/)** - Orquestração de containers
+
+### Testes
+
+- **[Jest](https://jestjs.io/)** - Framework de testes
+- **[Supertest](https://www.npmjs.com/package/supertest)** - Testes E2E
+
+---
+
+## 📋 Pré-requisitos
+
+Antes de começar, você precisa ter instalado:
+
+- **[Node.js](https://nodejs.org/)** (versão 20 ou superior)
+- **[pnpm](https://pnpm.io/)** (gerenciador de pacotes)
+- **[Docker](https://www.docker.com/)** e **[Docker Compose](https://docs.docker.com/compose/)** (opcional, para rodar com containers)
+- **[Git](https://git-scm.com/)**
+
+### Verificar instalação:
 
 ```bash
-$ pnpm install
+node --version   # v20.x.x ou superior
+pnpm --version   # 8.x.x ou superior
+docker --version # 24.x.x ou superior
 ```
 
-## Compile and run the project
+---
+
+## 📦 Instalação
+
+### 1. Clone o repositório
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+git clone https://github.com/seu-usuario/desafio-backend-grupo-adriano-cobuccio.git
+cd desafio-backend-grupo-adriano-cobuccio
 ```
 
-## Run tests
+### 2. Instale as dependências
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+pnpm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 3. Configure as variáveis de ambiente
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+# Copie o arquivo de exemplo
+cp .env.example .env
+
+# Edite o arquivo .env com suas configurações
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## ⚙️ Configuração
 
-Check out a few resources that may come in handy when working with NestJS:
+### Variáveis de Ambiente
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
 
-## Support
+```env
+# Database
+DATABASE_URL="postgresql://docker:docker@localhost:5432/bank?schema=public"
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# JWT
+JWT_SECRET="sua-chave-secreta-super-segura-mude-isso"
 
-## Stay in touch
+# Application
+PORT=3333
+NODE_ENV=development
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Banco de Dados
 
-## License
+#### Executar migrations:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```bash
+pnpm prisma migrate dev
+```
+
+#### Gerar Prisma Client:
+
+```bash
+pnpm prisma generate
+```
+
+#### Abrir Prisma Studio (GUI para o banco):
+
+```bash
+pnpm prisma studio
+```
+
+---
+
+## 🎯 Execução
+
+### Modo Desenvolvimento
+
+```bash
+# Iniciar em modo watch (recarrega automaticamente)
+pnpm run start:dev
+```
+
+A aplicação estará disponível em: **http://localhost:3333**
+
+### Modo Produção
+
+```bash
+# Build da aplicação
+pnpm run build
+
+# Executar versão de produção
+pnpm run start:prod
+```
+
+### Acessar Recursos
+
+| Recurso | URL | Descrição |
+|---------|-----|-----------|
+| API | http://localhost:3333 | Endpoints da API |
+| Swagger | http://localhost:3333/api/docs | Documentação interativa |
+| Métricas | http://localhost:3333/metrics | Prometheus metrics |
+
+---
+
+## 🧪 Testes
+
+### Executar todos os testes
+
+```bash
+pnpm test
+```
+
+### Testes em modo watch
+
+```bash
+pnpm test:watch
+```
+
+### Coverage de testes
+
+```bash
+pnpm test:cov
+```
+
+### Testes E2E
+
+```bash
+pnpm test:e2e
+```
+
+### Resultados dos Testes
+
+```
+Test Suites: 8 passed, 8 total
+Tests:       42 passed, 42 total
+Snapshots:   0 total
+Time:        2.252 s
+```
+
+#### Cobertura de Testes
+
+- ✅ **AuthService** (4 testes)
+- ✅ **AuthController** (4 testes)
+- ✅ **UsersService** (3 testes)
+- ✅ **UsersController** (4 testes)
+- ✅ **WalletsService** (3 testes)
+- ✅ **WalletsController** (4 testes)
+- ✅ **TransactionsService** (9 testes)
+- ✅ **TransactionsController** (11 testes)
+
+---
+
+## 📚 Documentação API
+
+### Swagger UI
+
+Acesse a documentação interativa completa em:
+
+```
+http://localhost:3333/api/docs
+```
+
+### Endpoints Principais
+
+#### 🔐 Autenticação
+
+```http
+POST /auth/signin
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "senha123"
+}
+```
+
+**Response:**
+```json
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+#### 👤 Usuários
+
+```http
+POST /users
+Content-Type: application/json
+
+{
+  "name": "João Silva",
+  "email": "joao@example.com",
+  "password": "senha123"
+}
+```
+
+#### 💰 Depósito
+
+```http
+POST /wallets/deposits
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "amount": 100.50
+}
+```
+
+#### 💸 Transferência
+
+```http
+POST /transactions
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "receiverUserId": "uuid-do-destinatario",
+  "amount": 50.00,
+  "idempotencyKey": "uuid-unico",
+  "description": "Pagamento teste"
+}
+```
+
+#### 🔄 Estorno
+
+```http
+POST /transactions/{id}/revert
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "idempotencyKey": "uuid-unico-estorno"
+}
+```
+
+### Autenticação
+
+Para endpoints protegidos, inclua o header:
+
+```
+Authorization: Bearer {seu-token-jwt}
+```
+
+---
+
+## 🐳 Docker
+
+### Executar com Docker Compose
+
+#### 1. Iniciar todos os serviços
+
+```bash
+docker-compose up -d
+```
+
+#### 2. Verificar logs
+
+```bash
+# Todos os serviços
+docker-compose logs -f
+
+# Apenas a aplicação
+docker-compose logs -f app
+```
+
+#### 3. Executar migrations
+
+```bash
+docker-compose exec app pnpm prisma migrate deploy
+```
+
+#### 4. Parar os serviços
+
+```bash
+docker-compose down
+```
+
+#### 5. Rebuild limpo (em caso de problemas)
+
+```bash
+docker-compose down -v
+docker-compose build --no-cache
+docker-compose up -d
+```
+
+### Serviços Docker
+
+| Serviço | Porta | URL | Credenciais |
+|---------|-------|-----|-------------|
+| App (NestJS) | 3333 | http://localhost:3333 | - |
+| PostgreSQL | 5432 | localhost:5432 | docker/docker |
+| Prometheus | 9090 | http://localhost:9090 | - |
+| Grafana | 3001 | http://localhost:3001 | admin/admin |
+
+---
+
+## 📊 Monitoramento
+
+### Prometheus
+
+Acesse as métricas em:
+```
+http://localhost:9090
+```
+
+### Grafana
+
+1. Acesse: http://localhost:3001
+2. Login: `admin` / `admin`
+3. Adicione data source: Prometheus (http://prometheus:9090)
+4. Importe dashboards personalizados
+
+### Métricas Disponíveis
+
+```
+http://localhost:3333/metrics
+```
+
+Exemplos de métricas expostas:
+- `nodejs_version_info` - Informações da versão Node.js
+- `process_cpu_user_seconds_total` - Uso de CPU
+- `process_resident_memory_bytes` - Uso de memória
+- `http_requests_total` - Total de requisições HTTP
+
+---
+
+## 🗂️ Estrutura do Projeto
+
+```
+src/
+├── modules/
+│   ├── auth/                 # Autenticação e autorização
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   ├── auth.guard.ts
+│   │   └── dto/
+│   ├── users/                # Gerenciamento de usuários
+│   │   ├── users.controller.ts
+│   │   ├── users.service.ts
+│   │   └── dto/
+│   ├── wallets/              # Carteiras digitais
+│   │   ├── wallets.controller.ts
+│   │   ├── wallets.service.ts
+│   │   └── dto/
+│   └── transactions/         # Transações financeiras
+│       ├── transactions.controller.ts
+│       ├── transactions.service.ts
+│       └── dto/
+├── shared/
+│   ├── config/               # Configurações
+│   ├── database/             # Prisma e repositórios
+│   │   ├── prisma.service.ts
+│   │   ├── unit-of-work.ts
+│   │   └── repositories/
+│   ├── decorators/           # Decorators customizados
+│   └── controllers/          # Controllers compartilhados
+├── app.module.ts             # Módulo principal
+└── main.ts                   # Bootstrap da aplicação
+
+prisma/
+├── schema.prisma             # Schema do banco de dados
+└── migrations/               # Migrations
+
+docs/
+├── TESTS_DOCUMENTATION.md    # Documentação dos testes
+├── SWAGGER_DOCUMENTATION.md  # Documentação da API
+├── DOCKER_SETUP.md           # Setup do Docker
+└── PROMETHEUS_PUBLIC_ROUTE.md # Configuração Prometheus
+```
+
+---
+
+## 🛠️ Scripts Disponíveis
+
+```bash
+# Desenvolvimento
+pnpm run start:dev          # Modo desenvolvimento com watch
+
+# Build
+pnpm run build              # Compilar TypeScript
+
+# Produção
+pnpm run start:prod         # Executar versão compilada
+
+# Testes
+pnpm test                   # Executar testes unitários
+pnpm test:watch             # Testes em modo watch
+pnpm test:cov               # Coverage de testes
+pnpm test:e2e               # Testes end-to-end
+
+# Database
+pnpm prisma migrate dev     # Criar migration
+pnpm prisma migrate deploy  # Aplicar migrations
+pnpm prisma generate        # Gerar Prisma Client
+pnpm prisma studio          # Abrir GUI do banco
+
+# Linting
+pnpm run lint               # Executar ESLint
+pnpm run format             # Formatar código com Prettier
+```
+
+---
+
+## 🔒 Segurança
+
+### Práticas Implementadas
+
+- ✅ Senhas hasheadas com bcrypt (salt rounds: 12)
+- ✅ Tokens JWT com expiração
+- ✅ Validação de entrada com class-validator
+- ✅ Sanitização de dados
+- ✅ Headers de segurança com Helmet
+- ✅ CORS configurado
+- ✅ Rate limiting (10 requests/minuto)
+- ✅ Idempotência em transações
+- ✅ Transações atômicas com Prisma
+
+### Recomendações para Produção
+
+- 🔐 Use variáveis de ambiente para secrets
+- 🔐 Configure HTTPS/TLS
+- 🔐 Implemente rate limiting por IP
+- 🔐 Configure WAF (Web Application Firewall)
+- 🔐 Monitore logs de segurança
+- 🔐 Mantenha dependências atualizadas
+- 🔐 Implemente 2FA para usuários admin
+
+---
+
+## 📝 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+## 👨‍💻 Autor
+
+**Alef White**
+
+- GitHub: [AlefWhite](https://github.com/alefwhite)
+
