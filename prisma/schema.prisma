@@ -50,6 +50,7 @@ enum TransactionStatus {
 
 model Transaction {
   id               String            @id @default(uuid())
+  idempotencyKey   String            @unique @map("idempotency_key")
   senderWalletId   String            @map("sender_wallet_id")
   receiverWalletId String            @map("receiver_wallet_id")
   amount           Decimal
