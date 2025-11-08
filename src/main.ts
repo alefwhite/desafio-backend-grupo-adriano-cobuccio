@@ -47,7 +47,13 @@ async function bootstrap() {
     },
   });
 
-  await app.listen(process.env.PORT ?? 3000);
+  const port = process.env.PORT ?? 3000;
+
+  await app.listen(port);
+
+  console.log(`Application is running on: http://localhost:${port}/api/docs`);
+  console.log(`✅ App running on http://localhost:${port}`);
+  console.log(`📊 Metrics available at http://localhost:${port}/metrics`);
 }
 bootstrap().catch((err) => {
   console.error('Failed to start application:', err);

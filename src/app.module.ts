@@ -5,6 +5,7 @@ import { WalletsModule } from './modules/wallets/wallets.module';
 import { TransactionsModule } from './modules/transactions/transactions.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 
 @Module({
   imports: [
@@ -20,6 +21,11 @@ import { ThrottlerModule } from '@nestjs/throttler';
           limit: 10,
         },
       ],
+    }),
+    PrometheusModule.register({
+      defaultMetrics: {
+        enabled: true,
+      },
     }),
   ],
   controllers: [],
