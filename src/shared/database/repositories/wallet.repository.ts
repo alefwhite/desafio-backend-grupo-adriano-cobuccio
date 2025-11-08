@@ -12,6 +12,7 @@ export interface IWalletsRepository {
     operation: 'increment' | 'decrement',
     tx?: PrismaTransaction,
   ): Promise<void>;
+  findOne(walletId: string): Promise<Wallet | null>;
 }
 
 @Injectable()
@@ -67,5 +68,21 @@ export class WalletsRepository implements IWalletsRepository {
         },
       },
     });
+  }
+
+  async findOne(walletId: string) {
+    const wallet = await this.prismaService.wallet.findUnique({
+      where: { id: walletId },
+    });
+
+    return wallet
+      ? new Wallet({
+          id: wallet.id,
+          userId: wallet.userId,
+          balance: Number(wallet.balance),
+          createdAt: wallet.createdAt,
+          updatedAt: wallet.updatedAt,
+        })
+      : null;
   }
 }
