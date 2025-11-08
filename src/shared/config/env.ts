@@ -10,16 +10,11 @@ class Env {
   @IsNotEmpty()
   @NotEquals('unsecure_jwt_secret')
   jwtSecret: string;
-
-  @IsString()
-  @IsNotEmpty()
-  redisURL: string;
 }
 
 export const env: Env = plainToInstance(Env, {
   dbURL: process.env.DATABASE_URL,
   jwtSecret: process.env.JWT_SECRET,
-  redisURL: process.env.REDIS_URL,
 });
 
 const envErrors = validateSync(env);
