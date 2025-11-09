@@ -1,0 +1,234 @@
+type: spec.insomnia.rest/5.0
+name: Bank
+meta:
+  id: wrk_1ed326c8c4674876a12f1a0b69c7b2fe
+  created: 1762405493135
+  modified: 1762405493135
+  description: ""
+collection:
+  - name: Auth
+    meta:
+      id: fld_b61f7710077f4440b0bfd23a5ba71500
+      created: 1758931279695
+      modified: 1762549166413
+      sortKey: -1758913022227.5
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/auth/signin"
+        name: Signin
+        meta:
+          id: req_738bec40a9754a10ab3a1b21d03b7781
+          created: 1758931296065
+          modified: 1762649638797
+          isPrivate: false
+          description: ""
+          sortKey: -1758931299137
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "samara@gmail.com",
+            	"password": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Users
+    meta:
+      id: fld_1f30deb03a6c42d2b93232fec4bf5014
+      created: 1762405520270
+      modified: 1762405535492
+      sortKey: -1758913022165
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/users"
+        name: Create user
+        meta:
+          id: req_23fb2bf40c6d4328ac9ce74b73eebda5
+          created: 1762405520272
+          modified: 1762660541498
+          isPrivate: false
+          description: ""
+          sortKey: -1758947673525
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Alef",
+            	"email": "alef@gmail.com",
+            	"password": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        authentication:
+          type: none
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Transactions
+    meta:
+      id: fld_3bdcf25f2e0640019044fe4a7104504c
+      created: 1762549574492
+      modified: 1762549574492
+      sortKey: -1758913022115
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/transactions"
+        name: Create transaction
+        meta:
+          id: req_0d26f5d714d941c8ac2d616da163000f
+          created: 1762549574494
+          modified: 1762660685996
+          isPrivate: false
+          description: ""
+          sortKey: -1758947673525
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"receiverUserId": "2b9d72f5-7579-4c24-b4b9-8a3e3b30c300",
+            	"amount": 4500.50,
+            	"idempotencyKey": "d8df3431-430a-41cf-8984-9a06a67da5c2",
+            	"description": "PIX"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/transactions/c830a15c-c1dd-4faa-a1d1-c8204d9ead1c/revert"
+        name: Revert transaction
+        meta:
+          id: req_b9655c8ea15340e9b6f9311a6f301f88
+          created: 1762578608362
+          modified: 1762579866815
+          isPrivate: false
+          description: ""
+          sortKey: -1758943579928
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"idempotencyKey": "ae78ea23-e49c-4ff3-b4ae-89e9f8701716"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Wallet
+    meta:
+      id: fld_28ce86f3e96b4b9990ee78646e225c52
+      created: 1762553583416
+      modified: 1762553583416
+      sortKey: -1758913022065
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/wallets/deposits"
+        name: Deposit
+        meta:
+          id: req_a6706f288b774bfca56aa4409e3342fb
+          created: 1762553583418
+          modified: 1762649729219
+          isPrivate: false
+          description: ""
+          sortKey: -1758947673525
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"amount": 100.50
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_efb8fdfe5a224041be93ad61bcc7cef5
+    created: 1758859134973
+    modified: 1758859134973
+environments:
+  name: Base Environment
+  meta:
+    id: env_32cdc66190cd404297941419f209d335
+    created: 1758859134969
+    modified: 1758859150507
+    isPrivate: false
+  subEnvironments:
+    - name: Local
+      meta:
+        id: env_aba8289e087e4b7abf656afe891914c5
+        created: 1758859158047
+        modified: 1762549508254
+        isPrivate: false
+        sortKey: 1758859158047
+      data:
+        baseUrl: http://localhost:3333
+        token: "{% response 'body', 'req_738bec40a9754a10ab3a1b21d03b7781',
+          'b64::JC5hY2Nlc3NUb2tlbg==::46b', 'never', 60 %}"
+      color: "#39a25e"
+spec:
+  meta:
+    id: spc_c654d77ed5a54758b6c28e6c07740650
+    created: 1762405493137
+    modified: 1762405493139
