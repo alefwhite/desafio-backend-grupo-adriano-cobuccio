@@ -465,10 +465,7 @@ prisma/
 └── migrations/               # Migrations
 
 docs/
-├── TESTS_DOCUMENTATION.md    # Documentação dos testes
-├── SWAGGER_DOCUMENTATION.md  # Documentação da API
-├── DOCKER_SETUP.md           # Setup do Docker
-└── PROMETHEUS_PUBLIC_ROUTE.md # Configuração Prometheus
+├── desafio.md    # Documentação do Desafio
 ```
 
 ---
