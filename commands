@@ -1,0 +1,18 @@
+NEST
+Comando para criação de módulos no NestJS
+1 - nest g mo nome-do-modulo
+
+Comando para criar um resource
+2 - nest g resource nome-do-recurso - Rest API
+=========================================================================================================
+Docker
+docker build -t desafio-backend-local .
+docker-compose down
+docker-compose build --no-cache
+docker-compose up -d
+=========================================================================================================
+Dashboard Grafana ID: 1860
+=========================================================================================================
+Prometheus Query
+rate(nestjs_process_cpu_seconds_total{app="backend-api"}[1m]) * 100
+=========================================================================================================

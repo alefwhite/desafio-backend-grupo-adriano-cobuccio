@@ -31,6 +31,7 @@ services:
       - .env
     environment:
       - NODE_ENV=development
+      - PORT=3333
       - DATABASE_URL=postgresql://docker:docker@pg:5432/bank?schema=public
     depends_on:
       pg:
@@ -49,8 +50,40 @@ services:
       - '9090:9090'
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
     depends_on:
       - app
+      - node-exporter
+      - cadvisor
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node-exporter
+    ports:
+      - '9100:9100'
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - '8080:8080'
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
     networks:
       - monitoring
     restart: unless-stopped
@@ -74,6 +107,7 @@ services:
 volumes:
   pg_data:
   grafana_data:
+  prometheus_data:
 
 networks:
   monitoring:
