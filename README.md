@@ -343,6 +343,12 @@ Authorization: Bearer {seu-token-jwt}
 
 ## 🐳 Docker
 
+> Quickstart (com Docker instalado): execute na raiz do projeto para subir todos os serviços:
+
+```bash
+docker-compose up -d
+```
+
 ### Executar com Docker Compose
 
 #### 1. Iniciar todos os serviços
@@ -361,11 +367,10 @@ docker-compose logs -f
 docker-compose logs -f app
 ```
 
-#### 3. Executar migrations
+#### 3. Migrations
 
-```bash
-docker-compose exec app pnpm prisma migrate deploy
-```
+As migrations são executadas automaticamente pelo script de entrypoint definido no container (`docker-entrypoint.sh`) quando os serviços sobem com `docker-compose up -d`. Não é necessário executar migrations manualmente após iniciar os containers.
+
 
 #### 4. Parar os serviços
 
@@ -536,4 +541,3 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 **Alef White**
 
 - GitHub: [AlefWhite](https://github.com/alefwhite)
-
