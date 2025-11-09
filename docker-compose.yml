@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   pg:
     image: bitnami/postgresql:latest
@@ -15,6 +17,30 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - monitoring
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    ports:
+      - '3333:3333'
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://docker:docker@pg:5432/bank?schema=public
+    depends_on:
+      pg:
+        condition: service_healthy
+    networks:
+      - monitoring
+    restart: unless-stopped
+    # optional: mount source for local development/hot-reload
+    # volumes:
+    #   - ./:/app
 
   prometheus:
     image: prom/prometheus:latest
@@ -22,7 +48,11 @@ services:
     ports:
       - '9090:9090'
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - app
+    networks:
+      - monitoring
     restart: unless-stopped
 
   grafana:
@@ -35,7 +65,16 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - prometheus
+    networks:
+      - monitoring
+    volumes:
+      - grafana_data:/var/lib/grafana
     restart: unless-stopped
 
 volumes:
   pg_data:
+  grafana_data:
+
+networks:
+  monitoring:
+    driver: bridge

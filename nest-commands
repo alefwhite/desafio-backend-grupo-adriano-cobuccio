@@ -3,3 +3,7 @@ Comando para criação de módulos no NestJS
 
 Comando para criar um resource
 2 - nest g resource nome-do-recurso - Rest API
+
+Docker
+
+docker build -t desafio-backend-local .

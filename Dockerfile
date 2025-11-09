@@ -1,19 +1,32 @@
 FROM node:alpine
 
-# Set working directory
-WORKDIR /usr/app
+WORKDIR /app
 
-# Copy package.json first to avoid unnecessary npm installs
-COPY ./package.json ./
+# Install dependencies for Prisma and native modules
+RUN apk add --no-cache openssl libc6-compat
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Copy dependency files
+COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN npm install
+RUN pnpm install --frozen-lockfile
 
-# Copy remaining files
+# Copy application source
 COPY . .
 
-# Expose port
-EXPOSE 3000
+# Generate Prisma Client
+RUN pnpm prisma generate
 
-# Default command
-CMD ["npm", "run", "start"]
+# Build application
+RUN pnpm build
+
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+EXPOSE 3333
+
+ENTRYPOINT ["docker-entrypoint.sh"]

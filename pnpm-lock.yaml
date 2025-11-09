@@ -50,9 +50,15 @@ importers:
       csrf-csrf:
         specifier: ^4.0.3
         version: 4.0.3
+      dotenv:
+        specifier: ^16.0.0
+        version: 16.6.1
       helmet:
         specifier: ^8.1.0
         version: 8.1.0
+      prisma:
+        specifier: ^6.19.0
+        version: 6.19.0(typescript@5.9.3)
       prom-client:
         specifier: ^15.1.3
         version: 15.1.3
@@ -108,9 +114,6 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.6.2
-      prisma:
-        specifier: ^6.19.0
-        version: 6.19.0(typescript@5.9.3)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
